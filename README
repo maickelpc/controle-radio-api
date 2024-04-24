@@ -1,0 +1,13 @@
+
+##Para instalar dar freeze nos pacotes:
+pip freeze > requirements.txt
+
+##Para instalar todas as dependencias:
+pip install -r .\requirements.txt
+
+### Para atualizar as dependencias:
+pip freeze > requirements.txt
+
+##Para gerar o executável:
+pyinstaller --onefile .\teste.py
+
