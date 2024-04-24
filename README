@@ -11,3 +11,17 @@ pip freeze > requirements.txt
 ##Para gerar o executável:
 pyinstaller --onefile .\teste.py
 
+
+### Para Manipular dados:
+
+1 - habilite a virtual env
+2 - acesse o python em modo interativo
+3 - rode os comandos abaixo para importar o contexto e a model desejada:
+    from api import app, db  # Certifique-se de que está importando corretamente
+    from models import User  # Ou 'from sua_aplicacao.models import User
+4 - escreva o codigo abaixo respeitando a identacao
+    with app.app_context():
+        new_user = User(username='novo_usuario')
+        new_user.set_password('senha_segura')
+        db.session.add(new_user)
+        db.session.commit()
