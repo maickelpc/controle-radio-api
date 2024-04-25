@@ -1,9 +1,28 @@
+## Criar o ambiente virtual
+Se o ambiente virtual ainda não tiver sido criado, rode um dos comandos abaixo na pasta raiz
 
-##Para instalar dar freeze nos pacotes:
-pip freeze > requirements.txt
+    python3 -m venv venv
+    ou
+    python -m venv env
+
+## Habilitar o ambiente virtual
+em Windows:    
+    venv\Scripts\activate
+em Linux:
+    source venv/bin/activate
+    
+a partir daqui o console deve ter:
+(venv):
 
 ##Para instalar todas as dependencias:
 pip install -r .\requirements.txt
+
+
+## Executar o projeto:
+Python api.py
+
+
+# Outras informações
 
 ### Para atualizar as dependencias:
 pip freeze > requirements.txt
