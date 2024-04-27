@@ -16,10 +16,20 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     print(f"User: {user}")
-    if user and check_password_hash(user.password_hash, password):
+    if user and len(password) > 0 and check_password_hash(user.password_hash, password):
         # Cria o token de acesso JWT
         access_token = create_access_token(identity=user.id)
-        return jsonify(access_token=access_token), 200
+        
+        print("------------------------------")
+        print(user.to_dict())
+        print("------------------------------")
+        retorno = {
+            'user': user.to_dict(),
+            'access_token': access_token
+        }
+        print(retorno)
+        
+        return jsonify(retorno), 200
 
     return jsonify({'message': 'Invalid username or password.'}), 401
 
