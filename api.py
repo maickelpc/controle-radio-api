@@ -11,6 +11,7 @@ from config import ProductionConfig
 from controllers.StatusController import status_blueprint
 from controllers.AuthController import auth_blueprint
 from controllers.UserController import user_blueprint
+from controllers.VozController import voz_blueprint
 
 app = Flask(__name__)
 app.config['DEBUG'] = True  # Ativa o modo debug e o reloading automático
@@ -50,7 +51,8 @@ jwt = JWTManager(app)
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
 app.register_blueprint(status_blueprint, url_prefix='/status')
-app.register_blueprint(user_blueprint, url_prefix='/user')
+app.register_blueprint(user_blueprint, url_prefix='/users')
+app.register_blueprint(voz_blueprint, url_prefix='/vozes')
 
 
 

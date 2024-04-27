@@ -15,7 +15,7 @@ def login():
     password = data.get('password')
 
     user = User.query.filter_by(username=username).first()
-    print(f"User: {user}")
+
     if user and user.ativo and len(password) > 0 and check_password_hash(user.password_hash, password):
         # Cria o token de acesso JWT
         access_token = create_access_token(identity=user.id)
@@ -24,7 +24,6 @@ def login():
             'user': user.to_dict(),
             'access_token': access_token
         }
-        print(retorno)
         
         return jsonify(retorno), 200
 
