@@ -16,13 +16,10 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     print(f"User: {user}")
-    if user and len(password) > 0 and check_password_hash(user.password_hash, password):
+    if user and user.ativo and len(password) > 0 and check_password_hash(user.password_hash, password):
         # Cria o token de acesso JWT
         access_token = create_access_token(identity=user.id)
-        
-        print("------------------------------")
-        print(user.to_dict())
-        print("------------------------------")
+      
         retorno = {
             'user': user.to_dict(),
             'access_token': access_token
@@ -50,5 +47,6 @@ def check_users():
     if(user_count == 0):
         new_user = User(username='maickelpc', nome='Maickel')  # Adapte os campos conforme necessário
         new_user.set_password('teste123')
+        new_user.perfil = 'ADMIN'
         db.session.add(new_user)
         db.session.commit()
