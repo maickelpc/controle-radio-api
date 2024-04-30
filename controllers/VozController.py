@@ -15,7 +15,7 @@ per_page_default = '20'
 
 
 @voz_blueprint.route('/', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def index():
     page = int(request.args.get('page', default=page_default))
     per_page = int(request.args.get('per_page', default=per_page_default))
@@ -46,7 +46,7 @@ def index():
 
 
 @voz_blueprint.route('/<int:id>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def get(id):
     try:
         registro = Voz.query.filter_by(id=id).first()
@@ -58,7 +58,7 @@ def get(id):
 
 
 @voz_blueprint.route('/', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def store():
     validator = VozValidator()
     try:
@@ -77,7 +77,7 @@ def store():
 
 
 @voz_blueprint.route('/<int:id>', methods=['PUT'])
-@jwt_required()
+# @jwt_required()
 def update(id):
     validator = VozValidator()
     try:
@@ -99,7 +99,7 @@ def update(id):
 
 
 @voz_blueprint.route('/<int:id>', methods=['DELETE'])
-@jwt_required()
+# @jwt_required()
 def destroy(id):
     
     try:

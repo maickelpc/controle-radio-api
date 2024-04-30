@@ -17,6 +17,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True  # Ativa o modo debug e o reloading automático
 app.config['JWT_SECRET_KEY'] = 'super-secret'  # Deve ser uma chave segura e única
 
+# Configuração do CORS para aceitar absolutamente tudo
 CORS(app)
 
 ### Configuracao do log

@@ -4,6 +4,7 @@ from flask_jwt_extended import create_access_token, jwt_required
 from models.User import User
 from werkzeug.security import check_password_hash
 from database import db
+from datetime import timedelta
 
 auth_blueprint = Blueprint('auth', __name__)
 
@@ -18,7 +19,8 @@ def login():
 
     if user and user.ativo and len(password) > 0 and check_password_hash(user.password_hash, password):
         # Cria o token de acesso JWT
-        access_token = create_access_token(identity=user.id)
+        expires = timedelta(hours=20)
+        access_token = create_access_token(identity=user.id, expires_delta=expires)
       
         retorno = {
             'user': user.to_dict(),
