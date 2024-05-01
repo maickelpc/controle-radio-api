@@ -8,6 +8,7 @@ from flask import Blueprint
 from validators.UserValidator import UserValidator
 from marshmallow import ValidationError
 from sqlalchemy import or_
+from exceptions import BusinessException
 
 user_blueprint = Blueprint('users', __name__)
 page_default = '1'
@@ -57,9 +58,11 @@ def get(id):
     try:
         registro = User.query.filter_by(id=id).first()
         return jsonify(registro.to_dict()), 200
+    except BusinessException as err:
+        return jsonify({'erro': str(err)}), 400
     except Exception as err:
         app.logger.info(err)
-        return jsonify({'erro': 'Ocorreu um erro interno.'}), 400
+        return jsonify({'erro': "Ocorreu um erro interno no sistema"}), 400
 
 
 
@@ -77,9 +80,11 @@ def store():
         return jsonify(registro.to_dict()), 200
     except ValidationError as err:
         return jsonify(err.messages), 422
+    except BusinessException as err:
+        return jsonify({'erro': str(err)}), 400
     except Exception as err:
         app.logger.info(err)
-        return jsonify({'erro': 'Ocorreu um erro interno.'}), 400
+        return jsonify({'erro': "Ocorreu um erro interno no sistema"}), 400
 
 
 
@@ -99,9 +104,11 @@ def update(id):
         return jsonify(registro.to_dict()), 200
     except ValidationError as err:
         return jsonify(err.messages), 422
+    except BusinessException as err:
+        return jsonify({'erro': str(err)}), 400
     except Exception as err:
         app.logger.info(err)
-        return jsonify({'erro': 'Ocorreu um erro interno.'}), 400
+        return jsonify({'erro': "Ocorreu um erro interno no sistema"}), 400
 
 
 
@@ -116,9 +123,11 @@ def destroy(id):
         
         return jsonify(registro.to_dict()), 200
     
+    except BusinessException as err:
+        return jsonify({'erro': str(err)}), 400
     except Exception as err:
         app.logger.info(err)
-        return jsonify({'erro': 'Ocorreu um erro interno.'}), 400
+        return jsonify({'erro': "Ocorreu um erro interno no sistema"}), 400
 
 
 
