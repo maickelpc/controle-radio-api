@@ -76,7 +76,7 @@ def store():
         
         return jsonify(registro.to_dict()), 200
     except ValidationError as err:
-        return jsonify(err.messages), 400
+        return jsonify(err.messages), 422
     except Exception as err:
         app.logger.info(err)
         return jsonify({'erro': 'Ocorreu um erro interno.'}), 400
@@ -98,7 +98,7 @@ def update(id):
         
         return jsonify(registro.to_dict()), 200
     except ValidationError as err:
-        return jsonify(err.messages), 400
+        return jsonify(err.messages), 422
     except Exception as err:
         app.logger.info(err)
         return jsonify({'erro': 'Ocorreu um erro interno.'}), 400
@@ -115,8 +115,7 @@ def destroy(id):
         db.session.commit()
         
         return jsonify(registro.to_dict()), 200
-    except ValidationError as err:
-        return jsonify(err.messages), 400
+    
     except Exception as err:
         app.logger.info(err)
         return jsonify({'erro': 'Ocorreu um erro interno.'}), 400
