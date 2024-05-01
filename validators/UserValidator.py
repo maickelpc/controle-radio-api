@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, validate, ValidationError
+from marshmallow import Schema, fields, validate, ValidationError,EXCLUDE
 
 class UserValidator(Schema):
     username = fields.Str(required=True, validate=validate.Length(min=4, max=25))
@@ -22,5 +22,8 @@ class UserValidator(Schema):
     #         raise ValidationError('Passwords must match.')
     #     return data
 
+
+    class Meta:
+        unknown = EXCLUDE
 
     

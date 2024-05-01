@@ -87,6 +87,7 @@ def update(id):
             if(key == 'id'):
                 continue
             setattr(registro, key, value)
+            print(f'Atribuindo {key}')
         db.session.commit()
         
         return jsonify(registro.to_dict()), 200
