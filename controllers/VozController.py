@@ -8,7 +8,7 @@ from flask import Blueprint
 from validators.VozValidator import VozValidator
 from marshmallow import ValidationError
 from sqlalchemy import or_
-from exceptions import BusinessException
+from exceptions.BusinessException import BusinessException
 
 voz_blueprint = Blueprint('vozes', __name__)
 page_default = '1'
@@ -66,10 +66,10 @@ def store():
     validator = VozValidator()
     try:
         data = validator.load(request.json)
-        registro = Voz.query.filter_by(nome=data["nome"]).first()
+        registro = Voz.query.filter(Voz.nome.ilike( data["nome"])).first()
         if registro != None:
             
-            raise BusinessException(f"O nome {data["nome"]} ja está em uso.")
+            raise BusinessException(f"O nome {data['nome']} ja está em uso.")
         registro = Voz(**data)  # Adapte os campos conforme necessário
         db.session.add(registro)
         db.session.commit()
@@ -91,6 +91,14 @@ def update(id):
     validator = VozValidator()
     try:
         data = validator.load(request.json)
+        registro = Voz.query.filter(
+            Voz.nome.ilike( data["nome"]),
+            Voz.id != id
+        ).first()
+        if registro != None:
+            
+            raise BusinessException(f"O nome {data['nome']} ja está em uso.")
+        
         registro = Voz.query.filter_by(id=id).first()
         for key, value in data.items():
             if(key == 'id'):
