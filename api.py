@@ -18,7 +18,8 @@ app.config['DEBUG'] = True  # Ativa o modo debug e o reloading automático
 app.config['JWT_SECRET_KEY'] = 'super-secret'  # Deve ser uma chave segura e única
 
 # Configuração do CORS para aceitar absolutamente tudo
-CORS(app)
+# CORS(app)
+CORS(app, support_credentials=True)
 
 ### Configuracao do log
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -50,7 +51,6 @@ jwt = JWTManager(app)
 
 
 app.register_blueprint(auth_blueprint, url_prefix='/auth')
-
 app.register_blueprint(status_blueprint, url_prefix='/status')
 app.register_blueprint(user_blueprint, url_prefix='/users')
 app.register_blueprint(voz_blueprint, url_prefix='/vozes')

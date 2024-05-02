@@ -8,7 +8,8 @@ from flask import Blueprint
 from validators.UserValidator import UserValidator
 from marshmallow import ValidationError
 from sqlalchemy import or_
-from exceptions import BusinessException
+from exceptions.BusinessException import BusinessException
+from werkzeug.security import check_password_hash
 
 user_blueprint = Blueprint('users', __name__)
 page_default = '1'
@@ -131,4 +132,31 @@ def destroy(id):
 
 
 
+
+
+@user_blueprint.route('/<int:id>/trocar-senha', methods=['POST'])
+@jwt_required()
+def trocarSenha(id):
+    
+    try:
+        registro = User.query.filter_by(id=id).first()
+        
+        if(request.json['new_password'] != request.json['confirm_password']):
+            raise BusinessException('As novas senhas digitadas não conferem')
+        
+        if not check_password_hash(registro.password_hash, request.json['password']):
+            raise BusinessException('Senha Inválida!')
+        
+        registro.set_password(request.json['new_password'])
+        db.session.add(registro)
+        db.session.commit()
+        
+        return jsonify(registro.to_dict()), 200
+    except ValidationError as err:
+        return jsonify(err.messages), 422
+    except BusinessException as err:
+        return jsonify({'erro': str(err)}), 400
+    except Exception as err:
+        app.logger.info(err)
+        return jsonify({'erro': "Ocorreu um erro interno no sistema"}), 400
 
