@@ -11,3 +11,7 @@ class Ramo(db.Model):
     
     def __repr__(self):
         return f'<Ramo {self.nome}>'
+    
+    def to_dict(self):
+        # Cria um dicionário com todos os campos, exceto 'password_hash'
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns if c.name != 'password_hash'}

@@ -11,6 +11,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(200))
     nome = db.Column(db.String(50), nullable=False)
+    fone = db.Column(db.String(50), nullable=False)
     password_hash = db.Column(db.String(128))
     perfil = db.Column(Enum('ADMIN', 'VENDEDOR', 'OPERACIONAL', 'FINANCEIRO', name='perfil_types'), nullable=False)
     ativo = db.Column(db.Boolean, default=True)  
